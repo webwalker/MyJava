@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file. Any modifications will be overwritten. 
+	To include a user specific buildfile here, simply create one in the same 
+	directory with the processing instruction <?eclipse.ant.import?> as the first 
+	entry and export the buildfile again. -->
+<!-- <project basedir="." default="release" name="MyJava"> -->
+<project basedir="." default="aspectj" name="MyJava"
+	xmlns:aspectj="antlib:org.aspectj">
+	<!--主要的系统环境属性 -->
+	<property environment="env" /><!--取window,unix...的环境变量 -->
+	<property name="java.home" value="${env.JAVA_HOME}" />
+	<property name="ant.home" value="${env.ANT_HOME}" />
+	<property name="ECLIPSE_HOME" value="G:/download/Android/eclipse" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+	<property name="file.manifest" value="manifest.txt" />
+
+	<!--主要的app环境属性 -->
+	<property name="app.name" value="MyJava" />
+	<property name="app.jar" value="${app.name}.jar" />
+	<property name="app.copyright"
+		value=" Copyright (c) 2002 MyJava.  All rights reserved." />
+
+	<!--app中src的属性 -->
+	<property name="src.dir" value="src" />
+	<!--app用到的lib -->
+	<property name="lib.dir" value="lib" />
+	<!--app用到的其他目录 -->
+	<property name="webinf.dir" value="WebContent/WEB-INF" />
+
+	<!--app的build目录中 -->
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="build.lib" value="${build.dir}/lib" />
+	<property name="build.webinf" value="${build.dir}/WEB-INF" />
+	<property name="build.webinf.lib" value="${build.webinf}/lib" />
+
+	<!-- 定义一组路径以后可以通过id重用这组路径 -->
+	<path id="userclasspath">
+		<pathelement location="${lib.dir}/junit.jar" />
+		<pathelement location="${lib.dir}/aspectjrt.jar" />
+	</path>
+	<path id="Spring.userclasspath">
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-aop-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-aop-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-aop-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-aspects-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-aspects-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-aspects-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-beans-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-beans-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-beans-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-context-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-context-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-context-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-context-support-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-context-support-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-context-support-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-core-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-core-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-core-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-expression-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-expression-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-expression-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-instrument-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-instrument-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-instrument-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-instrument-tomcat-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-instrument-tomcat-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-instrument-tomcat-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-jdbc-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-jdbc-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-jdbc-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-jms-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-jms-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-jms-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-orm-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-orm-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-orm-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-oxm-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-oxm-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-oxm-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-struts-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-struts-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-struts-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-test-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-test-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-test-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-tx-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-tx-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-tx-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-web-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-web-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-web-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-webmvc-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-webmvc-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-webmvc-3.2.0.RELEASE-sources.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-webmvc-portlet-3.2.0.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-webmvc-portlet-3.2.0.RELEASE-javadoc.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/spring-framework-3.2.0.RELEASE-dist_____/spring-framework-3.2.0.RELEASE/libs/spring-webmvc-portlet-3.2.0.RELEASE-sources.jar" />
+	</path>
+	<path id="Apache CXF Library [2.7.1].libraryclasspath">
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/antlr-2.7.7.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/aopalliance-1.0.jar" />
+		<pathelement location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/asm-3.3.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/commons-codec-1.7.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/commons-collections-3.2.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/commons-lang-2.6.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/commons-logging-1.1.1.jar" />
+		<pathelement location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-2.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-manifest.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-services-sts-core-2.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-services-ws-discovery-api-2.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-services-ws-discovery-service-2.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-services-wsn-api-2.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-services-wsn-core-2.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-xjc-boolean-2.6.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-xjc-bug671-2.6.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-xjc-dv-2.6.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-xjc-runtime-2.6.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/cxf-xjc-ts-2.6.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/ehcache-core-2.5.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/FastInfoset-1.2.12.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/geronimo-javamail_1.4_spec-1.7.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/geronimo-jaxws_2.2_spec-1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/geronimo-jms_1.1_spec-1.1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/geronimo-servlet_3.0_spec-1.0.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/httpasyncclient-4.0-beta3.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/httpclient-4.2.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/httpcore-4.2.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/httpcore-nio-4.2.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/isorelax-20030108.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/javax.ws.rs-api-2.0-m10.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jaxb-api-2.2.6.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jaxb-impl-2.2.6.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jaxb-xjc-2.2.6.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jettison-1.3.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jetty-continuation-8.1.7.v20120910.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jetty-http-8.1.7.v20120910.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jetty-io-8.1.7.v20120910.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jetty-security-8.1.7.v20120910.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jetty-server-8.1.7.v20120910.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/jetty-util-8.1.7.v20120910.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/joda-time-1.6.2.jar" />
+		<pathelement location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/js-1.7R2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/mina-core-2.0.5.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/msv-core-2011.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/neethi-3.0.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/oauth-20100527.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/oauth-provider-20100527.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/opensaml-2.5.1-1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/openws-1.4.2-1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/relaxngDatatype-20020414.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/slf4j-api-1.6.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/slf4j-jdk14-1.6.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-aop-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-asm-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-beans-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-context-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-core-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-expression-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-jms-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-tx-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/spring-web-3.0.7.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/stax2-api-3.1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/velocity-1.7.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/woodstox-core-asl-4.1.4.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/wsdl4j-1.6.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/wss4j-1.6.8.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/xml-resolver-1.2.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/xmlbeans-2.6.0.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/xmlschema-core-2.0.3.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/xmlsec-1.5.3.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/xmltooling-1.3.2-1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/apache-cxf-2.7.1/lib/xsdlib-2010.1.jar" />
+	</path>
+	<path id="JUnit 4.libraryclasspath">
+		<pathelement
+			location="${ECLIPSE_HOME}/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900/junit.jar" />
+		<pathelement
+			location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar" />
+	</path>
+	<path id="MyBatis.userclasspath">
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/aopalliance-1.0.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/commons-logging-1.1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/jettison-1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/mybatis-3.1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/mybatis-spring-1.1.1.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-aop-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-asm-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-batch-core-2.1.8.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-batch-infrastructure-2.1.8.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-beans-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-context-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-core-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-expression-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-jdbc-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/spring-tx-3.1.1.RELEASE.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/xpp3_min-1.1.4c.jar" />
+		<pathelement
+			location="G:/download/J2EE/框架/mybatis/mybatis-spring-1.1.1-bundle/mybatis-spring-1.1.1/lib/xstream-1.3.jar" />
+	</path>
+	<path id="MyLib.userclasspath">
+		<pathelement location="../../MyJava/lib/commons-lang-2.5.jar" />
+		<pathelement location="../../MyJava/lib/junit.jar" />
+		<pathelement location="../../MyJava/lib/log4j-1.2.15.jar" />
+		<pathelement location="../../MyJava/lib/mybatis-3.1.1.jar" />
+		<pathelement location="../../MyJava/lib/mybatis-spring-1.1.1.jar" />
+		<pathelement location="../../MyJava/lib/mysql-connector-java-5.1.10-bin.jar" />
+		<pathelement location="../../MyJava/lib/ojdbc14.jar" />
+		<pathelement
+			location="../../MyJava/lib/com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar" />
+		<pathelement
+			location="../../MyJava/lib/com.springsource.org.apache.commons.pool-1.5.3.jar" />
+	</path>
+	<path id="AspectJ Runtime Library.libraryclasspath">
+		<pathelement
+			location="${ECLIPSE_HOME}/plugins/org.aspectj.runtime_1.7.2.20120920133900/aspectjrt.jar" />
+	</path>
+	<path id="MyJava.classpath">
+		<pathelement location="bin" />
+		<path refid="Spring.userclasspath" />
+		<path refid="Apache CXF Library [2.7.1].libraryclasspath" />
+		<path refid="JUnit 4.libraryclasspath" />
+		<path refid="MyBatis.userclasspath" />
+		<path refid="MyLib.userclasspath" />
+		<path refid="AspectJ Runtime Library.libraryclasspath" />
+		<pathelement location="lib/aspectjtools.jar" />
+		<pathelement location="lib/aspectjrt.jar" />
+	</path>
+	<target name="init" depends="clean">
+		<!--清除以前目录 -->
+		<delete dir="${build.dir}" failonerror="false" />
+
+		<!--准备目录 -->
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.lib}" />
+		<mkdir dir="${build.webinf}" />
+
+		<copy todir="${build.webinf}">
+			<fileset dir="${webinf.dir}/" />
+		</copy>
+
+		<copy todir="${build.webinf.lib}">
+			<fileset dir="${lib.dir}/" />
+		</copy>
+
+
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	<target depends="clean" name="cleanall" />
+
+	<taskdef classpath="lib/aspectjtools.jar"
+		resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+		<classpath refid="MyJava.classpath" />
+	</taskdef>
+
+	<!-- <iajc destdir="${build.classes}" debug="true" deprecation="false" failonerror="true"> 
+		<src path="src" /> <classpath refid="MyJava.classpath" /> </iajc> -->
+
+	<target depends="build-subprojects,build-project" name="build">
+	</target>
+	<target name="build-subprojects" />
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.classes}"
+			encoding="utf-8" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="MyJava.classpath" />
+		</javac>
+	</target>
+	<target
+		description="Build all projects which reference this project. Useful to propagate changes."
+		name="build-refprojects" />
+	<target description="copy Eclipse compiler jars to ant lib directory"
+		name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</copy>
+		<unzip dest="${ant.library.dir}">
+			<patternset includes="jdtCompilerAdapter.jar" />
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</unzip>
+	</target>
+	<target description="compile project with Eclipse compiler"
+		name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+		<antcall target="build" />
+	</target>
+	<target name="release" depends="build">
+		<jar basedir="${build.classes}" jarfile="${build.lib}/${app.jar}" />
+		<jar basedir="${build.classes}" jarfile="${build.webinf.lib}/${app.jar}" />
+	</target>
+
+	<target name="MyJava">
+		<java classname="MyJava" failonerror="true" fork="yes">
+			<classpath refid="MyJava.classpath" />
+		</java>
+	</target>
+	<target name="MainServer">
+		<java classname="com.webwalker.cxf.MainServer" failonerror="true"
+			fork="yes">
+			<classpath refid="MyJava.classpath" />
+		</java>
+	</target>
+
+	<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+		<classpath refid="MyJava.classpath" />
+	</taskdef>
+	<target name="aspectj2" depends="init" description="Compile all source code">
+		<iajc destdir="${build.dir}" debug="true" deprecation="false"
+			failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="MyJava.classpath" />
+		</iajc>
+	</target>
+
+	<!-- 编译Aspect -->
+	<target name="aspectj" depends="init">
+		<echo level="info">--- aspectj (start) ---</echo>
+		<!-- begin fix classpath for this bug https://issues.apache.org/bugzilla/show_bug.cgi?id=40291 -->
+		<condition property="targetos" value="windows" else="unix">
+			<os family="windows" />
+		</condition>
+		<!-- converting classpath -->
+		<pathconvert targetos="${targetos}" property="javac.convertedClasspath">
+			<path path="${src.dir}" />
+		</pathconvert>
+		<!-- end fix classpath -->
+		<iajc source="1.6" target="1.6" showweaveinfo="true" verbose="true"
+			destdir="${build.classes}" encoding="utf-8">
+			<sourceroots>
+				<pathelement location="${src.dir}" />
+			</sourceroots>
+			<inpath>
+				<pathelement location="${build.classes}" />
+			</inpath>
+			<classpath>
+				<pathelement location="${javac.convertedClasspath}" />
+			</classpath>
+			<aspectpath>
+				<pathelement location="${javac.convertedClasspath}" />
+			</aspectpath>
+			<classpath refid="MyJava.classpath" />
+		</iajc>
+		<!-- <jar basedir="${build.classes}" jarfile="${build.lib}/${app.jar}" 
+			/> <jar basedir="${build.classes}" jarfile="${build.webinf.lib}/${app.jar}" 
+			/> -->
+		<echo level="info">--- aspectj (finished) ---</echo>
+	</target>
+	<target name="-post-compile" depends="aspectj"></target>
+	<!-- 创建清单文件 -->
+</project>

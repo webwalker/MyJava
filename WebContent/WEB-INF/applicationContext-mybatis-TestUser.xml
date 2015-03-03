@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+        ">
+
+	<!--或者:注册数据库的连接信息 -->
+	<!-- <context:property-placeholder location="classpath:config/jdbc.properties"/> -->
+
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/test">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+		<property name="driver.encode" value="utf-8"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+
+		<!-- <property name="configLocation" value=""/> -->
+		<!-- 该属性用来指定MyBatis的XML配置文件路径,跟Spring整合时，编写MyBatis映射文件的目的无非是配置一下typeAlias、setting之类的 
+			元素。不用在其中指定数据源，或者事务处理方式。就算配置了也会被忽略。因为这些都是使用Spring中的配置 。当然如果你不打算添加typeAlias 
+			之类的设置的话，你连MyBatis的配置文件都不用写，更不用配置这个属性了 -->
+
+		<!--<property name="mapperLocations" value="src/UserMapper.xml"/> -->
+		<!-- 该配置文件用来指定Mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，那么可以不配置该选项 -->
+	</bean>
+
+	<!-- 注册Mapper方式一 <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+		<property name="mapperInterface" value="com.webwalker.mybatis.mapper.UserMapper"/> 
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/> </bean> -->
+
+	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下： -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.webwalker.mybatis.mapper" />
+	</bean>
+
+	<!-- 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+
+	<!-- 配置事务的传播特性 -->
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="edit*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="del*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 为AccountBiz接口配置事务拦截器，baseTransactionProxy是事务拦截器，在Controller中获取这个对象 -->
+	<!-- 糟糕的是，你需要为所有需要事务管理的类或接口都要进行这个配置！ 也许你可以配置一个BaseBiz的parent是baseTransactionProxy，然后所有要进行事务管理的接口或类，继承或实现BaseBiz这个接口。不妨可以尝试一番！ -->
+	<!-- <bean id="accountBiz" parent="baseTransactionProxy"> -->
+	<!-- 设置target，也就是AccountBiz的实现类 -->
+	<!-- <property name="target" ref="accountBizImpl" /> </bean> -->
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+
+	<!-- 指定自动搜索Bean组件、自动搜索切面类，生成Bean -->
+	<context:component-scan
+		base-package="com.webwalker.spring.aop.impl,com.webwalker.spring.aop.aspect">
+		<context:include-filter type="annotation"
+			expression="org.aspectj.lang.annotation.Aspect" />
+	</context:component-scan>
+
+	<!-- 启动@AspectJ支持 -->
+	<aop:aspectj-autoproxy />
+	<!-- 不打算采用SP的Xml Schema来配置，则采用后处理器，为Bean生成AOP代理 -->
+	<!-- 无需担心@Aspect会被同时增强处理, SP发现这个标记则跳过增强 -->
+	<bean
+		class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"></bean>
+
+</beans>

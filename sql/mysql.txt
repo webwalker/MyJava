@@ -1,0 +1,38 @@
+mysql：
+CREATE TABLE `user_info` (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `sex` tinyint(4) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+);
+
+oracle：
+
+
+注意： mybatis 支持1.4
+
+CREATE TABLE user_info (
+  user_id integer NOT NULL ,
+  username varchar2(50) DEFAULT NULL,
+  password varchar2(50) DEFAULT NULL,
+  birth_date date DEFAULT NULL,
+  sex integer DEFAULT NULL,
+  age integer DEFAULT NULL,
+  PRIMARY KEY (user_id)
+) 
+
+事务
+-------------------------
+drop database javaee;
+create database javaee;
+use javaee;
+
+create table news_inf
+(
+ news_id int primary key auto_increment,
+ news_title varchar(255) unique,
+ news_content varchar(255)
+);

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- 
+	该文件通过代码生成器自动生成,只需编写模板,可以生成任何代码
+     具体请查看: http://code.google.com/p/rapid-framework/
+    author badqiu email:badqiu(a)gmail.com
+-->
+<!--  cache - 配置给定命名空间的缓存。
+ cache-ref – 从其他命名空间引用缓存配置。
+ resultMap – 最复杂，也是最有力量的元素，用来描述如何从数据库结果集中来加载你的对象。
+ sql – 可以重用的SQL块，也可以被其他语句引用。
+ insert – 映射插入语句
+ update – 映射更新语句
+ delete – 映射删除语句
+ select – 映射查询语句 -->
+
+<mapper namespace="UserInfo">
+
+	<resultMap id="UserInfoResult" type="com.webwalker.entity.UserInfo">
+	</resultMap>
+	
+<!-- 	<select
+		id=”selectPerson”
+		parameterType=”int”
+		parameterMap=”deprecated”
+		resultType=”hashmap”
+		resultMap=”personResultMap”
+		flushCache=”false”
+		useCache=”true”
+		timeout=”10000”
+		fetchSize=”256”
+		statementType=”PREPARED”
+		resultSetType=”FORWARD_ONLY”
+	> 
+	
+resultMap（MyBatis最强大的元素）
+命名引用外部的resultMap。返回map是MyBatis最具力量的特性，对其有一个很好的理解的话，许多复杂映射的情形就能被解决了。使用resultMap或resultType，但不能同时使用。
+flushCache
+将其设置为true，不论语句什么时候被带哦用，都会导致缓存被清空。默认值：false。
+useCache
+将其设置为true，将会导致本条语句的结果被缓存。默认值：true。
+timeout
+这个设置驱动程序等待数据库返回请求结果，并抛出异常时间的最大等待值。默认不设置（驱动自行处理）。
+fetchSize
+这是暗示驱动程序每次批量返回的结果行数。默认不设置（驱动自行处理）。
+statementType
+STATEMENT,PREPARED或CALLABLE的一种。这会让MyBatis使用选择使用Statement，PreparedStatement或CallableStatement。默认值：PREPARED。
+resultSetType：FORWARD_ONLY|SCROLL_SENSITIVE|SCROLL_INSENSITIVE中的一种。默认是不设置（驱动自行处理）。
+useGeneratedKeys
+（仅对insert有用）这会告诉MyBatis使用JDBC的getGeneratedKeys方法来取出由数据（比如：像MySQL和SQL Server这样的数据库管理系统的自动递增字段）内部生成的主键。默认值：false。
+keyProperty
+（仅对insert有用）标记一个属性，MyBatis会通过getGeneratedKeys或者通过insert语句的selectKey子元素设置它的值。默认：不设置
+	-->
+
+	<!-- 通用代码段定义 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	user_id as userId,
+        	username as username,
+        	password as password,
+        	birth_date as birthDate,
+        	sex as sex,
+        	age as age
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="insert" parameterType="com.webwalker.entity.UserInfo" 
+		useGeneratedKeys="false" keyProperty="userId" 
+	>
+    <![CDATA[
+        INSERT INTO
+        user_info (
+        	user_id ,
+        	username ,
+        	password ,
+        	birth_date ,
+        	sex ,
+        	age 
+        ) VALUES (
+        	#{userId,jdbcType=BIGINT} ,
+        	#{username,jdbcType=VARCHAR} ,
+        	#{password,jdbcType=VARCHAR} ,
+        	#{birthDate,jdbcType=DATE} ,
+        	#{sex,jdbcType=TINYINT} ,
+        	#{age,jdbcType=INTEGER} 
+        )
+    ]]>
+		<!--	
+			oracle: order="BEFORE" SELECT sequenceName.nextval AS ID FROM DUAL 
+			DB2: order="BEFORE"" values nextval for sequenceName
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="userId">
+			SELECT sequenceName.nextval AS ID FROM DUAL 
+        </selectKey>
+		-->
+	</insert>
+    
+	<update id="update" parameterType="com.webwalker.entity.UserInfo">
+    <![CDATA[
+        UPDATE user_info SET
+	        username = #{username,jdbcType=VARCHAR} ,
+	        password = #{password,jdbcType=VARCHAR} ,
+	        birth_date = #{birthDate,jdbcType=DATE} ,
+	        sex = #{sex,jdbcType=TINYINT} ,
+	        age = #{age,jdbcType=INTEGER} 
+        WHERE 
+	        user_id = #{userId} 
+    ]]>
+	</update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+    <![CDATA[
+        delete from user_info where
+        user_id = #{userId} 
+    ]]>
+    </delete>
+    
+    <select id="getById" parameterType="java.lang.Long" resultMap="UserInfoResult">
+		select <include refid="commonColumns" />
+	    <![CDATA[
+		    from user_info 
+	        where 
+		        user_id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="dynamicWhere">
+		<where>
+	       <if test="userId != null">
+				and user_id = #{userId}
+			</if>
+	       <if test="username != null">
+				and username = #{username}
+			</if>
+	       <if test="password != null">
+				and password = #{password}
+			</if>
+	       <if test="birthDate != null">
+				and birth_date = #{birthDate}
+			</if>
+	       <if test="sex != null">
+				and sex = #{sex}
+			</if>
+	       <if test="age != null">
+				and age = #{age}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="count" resultType="long">
+        select count(*) from user_info 
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="pageSelect" resultMap="UserInfoResult">
+    	select <include refid="commonColumns" />
+	    from user_info 
+		<include refid="dynamicWhere"/>
+		<if test="sortColumns != null and sortColumns.length() != 0">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<configuration>
+
+	<!-- 属性配置，这里的属性会优先被读取，接着读取resource来覆盖,下面Environment中最后被读取 -->
+	<properties resource="com/webwalker/mybatis/config/config.properties">
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</properties>
+
+	<!-- 系统设置 -->
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+
+	<!-- 别名设置，简化名称 -->
+	<typeAliases>
+		<typeAlias alias="userMapper" type="com.webwalker.mybatis.mapper.UserMapper" />
+	</typeAliases>
+
+
+	<typeHandlers>
+		<typeHandler javaType="String" jdbcType="VARCHAR"
+			handler="com.webwalker.entity.EncodingStringTypeHandlerCallback" />
+	</typeHandlers>
+
+	<objectFactory type="com.webwalker.mybatis.impl.ExampleObjectFactory">
+
+	</objectFactory>
+
+	<!-- 某一点拦截已映射语句执行的调用 -->
+	<!-- <plugins></plugins> -->
+
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用了JDBC的提交和回滚设置，另一种MANAGED没什么用 -->
+			<transactionManager type="JDBC" />
+			<!-- 采用连接池，不用每次打开和关闭，属性信息参见文档，其他：UNPOOLED、JNDI -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+				<property name="driver.encoding" value="UTF8" />
+				<!-- <property name="defaultTransactionIsolationLevel" value="" /> -->
+			</dataSource>
+
+			<!-- oracle -->
+			<!-- <dataSource type="POOLED"> <property name="driver" value="oracle.jdbc.driver.OracleDriver" 
+				/> <property name="url" value="jdbc:oracle:thin:@localhost:1521:shhxxgs2" 
+				/> <property name="username" value="shhxxgs2" /> <property name="password" 
+				value="shhxxgs2" /> </dataSource> -->
+		</environment>
+		<!-- <environment id="second"></environment> -->
+	</environments>
+
+	<!-- 告诉mybatis到哪里去找SQL、映射, 其余的细节就是在每个SQL映射文件中了 -->
+	<mappers>
+		<mapper resource="com/webwalker/mybatis/mapper/TestMyBatisMapper.xml" />
+		<!-- <mapper url="file:///var/sqlmaps/AuthorMapper.xml"/> -->
+	</mappers>
+</configuration>
